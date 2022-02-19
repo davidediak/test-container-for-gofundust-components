@@ -1,31 +1,38 @@
-import React, { FC } from "react";
-import { detect } from "detect-browser";
-import { Extension } from "@terra-money/terra.js";
-import {
-  useWallet,
-  WalletStatus,
-  useInstallChromeExtension,
-  useConnectedWallet,
-} from "@terra-money/wallet-provider";
-
-
-import { Link, Text, HStack, chakra, useDisclosure } from "@chakra-ui/react";
-import ConnectWalletModal from './modals/ConnectWalletModal';
-
+import {useWallet, WalletStatus} from '@terra-money/wallet-provider';
+import React, {FC} from 'react';
 
 const TerraWallet: FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { status } = useWallet();
+  const {connect, disconnect} = useWallet();
+  const {status} = useWallet();
 
   if (status === WalletStatus.WALLET_CONNECTED) {
-    return <div> connected</div>
+    return (
+      <>
+        <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+          <div>connected</div>
+          <button
+        onClick={() => {
+          disconnect();
+        }}>
+        Click here to disconnect wallet
+      </button>
+        </div>
+      </>
+    );
   }
 
-  return (
-    <>
-      <ConnectWalletModal isOpen={isOpen} onClose={onClose} />
-    </>
-  );
+  if (status === WalletStatus.WALLET_NOT_CONNECTED) {
+    return (
+      <button
+        onClick={() => {
+          connect();
+        }}>
+        Click here to connect wallet
+      </button>
+    );
+  }
+
+  return <div>INITIALIZING</div>;
 };
 
 export default TerraWallet;
