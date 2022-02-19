@@ -3,11 +3,11 @@ import {ContributeToFund} from '@gofundust/components';
 import {TerraWebappProvider} from '@arthuryeti/terra';
 import {useWallet, WalletStatus, WalletProvider} from '@terra-money/wallet-provider';
 import TerraWallet from '../components/TerraWallet';
+import {Global} from '@emotion/react';
 
 const Home: NextPage = () => {
   return (
     <>
-      
           <TerraWallet />
           <Component></Component>
       
@@ -17,7 +17,6 @@ const Home: NextPage = () => {
 
 const Component = () => {
   const wallet = useWallet();
-  console.log(wallet);
   return (
     <>
       <ContributeToFund
